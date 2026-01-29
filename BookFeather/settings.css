@@ -1,0 +1,201 @@
+/* 1. ГЛОБАЛЬНЫЕ СТИЛИ И ТЕМЫ */
+:root {
+  --bg-color: #f3efe7;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --accent: #6e6150;
+  --border-color: #cccccc;
+  --danger: #e74c3c;
+}
+
+/* Темы для всей страницы настроек */
+body.dark {
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --text-color: #eeeeee;
+  --border-color: #444444;
+}
+
+body.read {
+  --bg-color: #f4ecd8;
+  --card-bg: #fdf8ec;
+  --text-color: #5b4636;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+/* 2. ШАПКА И КОНТЕЙНЕР */
+.top-bar {
+  background: var(--accent);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: auto;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.container {
+  max-width: 650px;
+  margin: 40px auto;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 30px 0;
+  opacity: 0.5;
+}
+
+/* 3. ЭЛЕМЕНТЫ ФОРМЫ */
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+select, input[type="text"], input[type="file"], input[type="color"] {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+/* Группа чекбоксов (исправление растягивания) */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.inline-label {
+  margin: 0;
+  text-transform: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* 4. ПРЕДПРОСМОТР (Preview) */
+.preview {
+  margin-top: 15px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 2px dashed var(--border-color);
+  border-radius: 10px;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 5. КНОПКИ */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.save-btn {
+  background: var(--accent);
+  color: white;
+  margin-top: 20px;
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  margin-top: 5px;
+  font-size: 13px;
+  padding: 8px;
+}
+
+.danger-btn {
+  background: var(--danger);
+  color: white;
+  margin-top: 10px;
+}
+
+.danger-btn.outline {
+  background: transparent;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+}
+
+.danger-btn:hover {
+  opacity: 0.9;
+}
+
+.upload-box {
+  background: rgba(0, 0, 0, 0.02);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.upload-box small {
+  display: block;
+  margin-top: 10px;
+  color: #777;
+}

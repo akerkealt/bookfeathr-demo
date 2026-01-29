@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя библиотека — Bookfeather</title>
+    <link rel="stylesheet" href="library.css">
+</head>
+<body class="light"> <header class="lib-header">
+    <div class="header-left">
+        <button class="back-btn" onclick="goHome()">←</button>
+        <h1>Моя библиотека</h1>
+    </div>
+    <button class="add-btn" onclick="openAddBookModal()">+ Добавить книгу</button>
+</header>
+
+<main class="library-container">
+    
+    <section class="shelf-section">
+        <h2>Ваши книги</h2>
+        <div id="bookList" class="book-list">
+            </div>
+    </section>
+
+    <section class="weekly-stats">
+        <h2>Прогресс за неделю</h2>
+        <div class="stats-days" id="statsDays">
+            </div>
+        <div class="stats-footer">
+            <small>Количество прочитанных страниц по дням</small>
+        </div>
+    </section>
+</main>
+
+<div id="addBookModal" class="modal">
+    <div class="modal-content">
+        <h2>Новая книга</h2>
+        
+        <div class="input-group">
+            <label for="bookTitle">Название</label>
+            <input type="text" id="bookTitle" placeholder="Например: Маленький принц">
+        </div>
+
+        <div class="input-group">
+            <label for="bookAuthor">Автор</label>
+            <input type="text" id="bookAuthor" placeholder="Антуан де Сент-Экзюпери">
+        </div>
+
+        <div class="input-group">
+            <label>Обложка</label>
+            <input type="file" id="bookCover" accept="image/*">
+        </div>
+
+        <div class="input-group">
+            <label>Файл книги (.pdf, .epub, .txt)</label>
+            <input type="file" id="bookFile" accept=".pdf,.epub,.txt">
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn-save" onclick="addBook()">Сохранить</button>
+            <button class="btn-cancel" onclick="closeAddBookModal()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<script src="library.js"></script>
+
+<script>
+    // Простая функция для возврата на главную (если нет в основном JS)
+    function goHome() {
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>

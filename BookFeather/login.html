@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вход — Bookfeather</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+/* Поддержка тем как в основном CSS */
+:root {
+  --bg: #e9e2d3;
+  --card-bg: #ffffff;
+  --text-main: #2f2a24;
+  --btn-bg: #6e6150;
+}
+
+body.dark { --bg: #121212; --card-bg: #1e1e1e; --text-main: #eeeeee; --btn-bg: #444; }
+body.read { --bg: #f4ecd8; --card-bg: #fdf8ec; --text-main: #5b4636; --btn-bg: #6d5644; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background 0.3s ease;
+}
+
+.card {
+  width: 380px;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
+  text-align: center;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: var(--text-main);
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background: transparent;
+  color: var(--text-main);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--btn-bg);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: opacity 0.2s;
+}
+
+button:hover { opacity: 0.9; }
+
+.link {
+  margin-top: 14px;
+  color: #2a6df4;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back {
+  margin-top: 15px;
+  color: var(--btn-bg);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2 id="title">Вход</h2>
+
+  <form id="authForm" onsubmit="handleAuth(event)">
+    <div id="formArea"></div>
+    <button type="submit" id="submitBtn">Войти</button>
+  </form>
+
+  <div id="switchText" class="link"></div>
+  <div class="back" onclick="location.href='index.html'">← На главную</div>
+</div>
+
+<script>
+const formArea = document.getElementById("formArea");
+const title = document.getElementById("title");
+const switchText = document.getElementById("switchText");
+const submitBtn = document.getElementById("submitBtn");
+
+function showLogin(){
+  title.innerText = "Вход";
+  submitBtn.innerText = "Войти";
+  formArea.innerHTML = `
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+  `;
+  switchText.innerText = "Нет аккаунта? Зарегистрироваться";
+  switchText.onclick = showRegister;
+}
+
+function showRegister(){
+  title.innerText = "Регистрация";
+  submitBtn.innerText = "Создать аккаунт";
+  formArea.innerHTML = `
+    <input type="text" name="username" placeholder="Имя пользователя" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+  `;
+  switchText.innerText = "Уже есть аккаунт? Войти";
+  switchText.onclick = showLogin;
+}
+
+// Заглушка для обработки входа
+function handleAuth(event) {
+  event.preventDefault();
+  alert("Вы успешно вошли/зарегистрировались!");
+  window.location.href = "index.html";
+}
+
+// Применение темы из настроек
+const savedSettings = localStorage.getItem("bookfeather_settings");
+if (savedSettings) {
+  const s = JSON.parse(savedSettings);
+  document.body.className = s.theme;
+}
+
+/* Проверка хэша */
+if(location.hash === "#register") showRegister();
+else showLogin();
+</script>
+
+</body>
+</html>

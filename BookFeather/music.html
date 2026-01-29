@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя музыка — Bookfeather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --bg: #f4f6fb;
+            --card: #ffffff;
+            --text: #222;
+            --accent: #6e6150;
+        }
+
+        /* Темная тема */
+        body.dark { --bg: #121212; --card: #1e1e1e; --text: #eee; }
+        body.read { --bg: #f4ecd8; --card: #fdf8ec; --text: #5b4636; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            transition: 0.3s;
+        }
+
+        .container { max-width: 600px; margin: 40px auto; }
+
+        h1 { text-align: center; color: var(--accent); }
+
+        .back {
+            position: fixed; top: 15px; left: 15px;
+            font-size: 24px; cursor: pointer; color: var(--accent);
+            text-decoration: none;
+        }
+
+        .add-box {
+            display: flex; gap: 10px; margin-bottom: 30px;
+            background: var(--card); padding: 15px;
+            border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        input {
+            flex: 1; padding: 12px; border-radius: 8px;
+            border: 1px solid #ddd; background: var(--bg); color: var(--text);
+        }
+
+        .btn-main {
+            padding: 10px 20px; background: var(--accent);
+            color: white; border: none; border-radius: 8px; cursor: pointer;
+            font-weight: 600;
+        }
+
+        .song {
+            background: var(--card); padding: 15px; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .song:hover { transform: translateX(5px); }
+
+        .song-info { display: flex; align-items: center; gap: 12px; }
+
+        .remove-btn {
+            background: none; border: none; color: #ff5c5c;
+            cursor: pointer; font-size: 18px; font-weight: bold;
+        }
+    </style>
+</head>
+<body class="light">
+
+<a class="back" href="index.html">←</a>
+
+<div class="container">
+    <h1>Моя музыка</h1>
+
+    <div class="add-box">
+        <input type="text" id="songInput" placeholder="Название песни или ссылка...">
+        <button class="btn-main" onclick="addSong()">Добавить</button>
+    </div>
+
+    <div id="songList"></div>
+</div>
+
+<script>
+    // Загрузка темы
+    const saved = localStorage.getItem("bookfeather_settings");
+    if (saved) document.body.className = JSON.parse(saved).theme;
+
+    const list = document.getElementById('songList');
+    const input = document.getElementById('songInput');
+
+    function loadSongs() {
+        const songs = JSON.parse(localStorage.getItem('songs')) || [];
+        list.innerHTML = '';
+        
+        songs.forEach((s, i) => {
+            // Исправлено: используем обратные кавычки для шаблонной строки
+            list.innerHTML += `
+                <div class="song">
+                    <div class="song-info">
+                        <span style="color:var(--accent)">♫</span>
+                        <span>${s}</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeSong(${i})">✕</button>
+                </div>
+            `;
+        });
+    }
+
+    function addSong() {
+        const text = input.value.trim();
+        if (!text) return;
+
+        const songs = JSON.parse(localStorage.getItem('songs')) || [];
+        songs.push(text);
+        localStorage.setItem('songs', JSON.stringify(songs));
+        input.value = '';
+        loadSongs();
+    }
+
+    function removeSong(i) {
+        const songs = JSON.parse(localStorage.getItem('songs'));
+        songs.splice(i, 1);
+        localStorage.setItem('songs', JSON.stringify(songs));
+        loadSongs();
+    }
+
+    // Слушатель для Enter
+    input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") addSong();
+    });
+
+    loadSongs();
+</script>
+
+</body>
+</html>

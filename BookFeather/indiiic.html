@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bookfeather</title>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --text:#111;
+  --accent:#4a90e2;
+  --fontSize:16px;
+  --fontWeight:400;
+  --fontStyle:normal;
+  --brightness:1;
+}
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:var(--fontSize);
+  font-weight:var(--fontWeight);
+  font-style:var(--fontStyle);
+  filter:brightness(var(--brightness));
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  background:#222;
+  color:#fff;
+}
+
+button{
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  background:var(--accent);
+  color:#fff;
+  font-size:14px;
+}
+
+.settings-modal{
+  position:fixed;
+  inset:0;
+  background:#000000aa;
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.settings-content{
+  width:95%;
+  height:90%;
+  background:#fff;
+  border-radius:15px;
+  padding:15px;
+  overflow:auto;
+}
+
+.settings-content h2{
+  margin-top:0;
+}
+
+.row{
+  margin:12px 0;
+}
+
+input, select{
+  width:100%;
+  padding:8px;
+  margin-top:6px;
+}
+
+.preview{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:#ddd;
+  margin-top:8px;
+  object-fit:cover;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>Bookfeather</div>
+  <button onclick="openSettings()">⚙ Настройки</button>
+</header>
+
+<main style="padding:20px">
+  <h1 data-i18n="welcome">Добро пожаловать!</h1>
+  <p data-i18n="desc">Здесь ваши книги становятся ближе.</p>
+</main>
+
+<!-- SETTINGS -->
+<div class="settings-modal" id="settings">
+  <div class="settings-content">
+    <h2 data-i18n="settings">Настройки</h2>
+
+    <div class="row">
+      <label data-i18n="avatar">Аватар</label>
+      <input type="file" id="avatarInput">
+      <img id="avatarPreview" class="preview"/>
+      <button onclick="removeAvatar()" data-i18n="remove">Удалить</button>
+    </div>
+
+    <div class="row">
+      <label data-i18n="background">Фон</label>
+      <input type="file" id="bgInput">
+      <button onclick="removeBg()" data-i18n="remove">Удалить фон</button>
+    </div>
+
+    <div class="row">
+      <label data-i18n="theme">Тема</label>
+      <select id="theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="read">Read</option>
+        <option value="cold">Cold</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label data-i18n="lang">Язык</label>
+      <select id="lang">
+        <option value="ru">Русский</option>
+        <option value="en">English</option>
+        <option value="kz">Қазақша</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="es">Español</option>
+        <option value="zh">中文</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label data-i18n="font">Размер шрифта</label>
+      <input type="range" min="14" max="26" id="fontSize">
+    </div>
+
+    <div class="row">
+      <label>Bold</label>
+      <input type="checkbox" id="bold">
+      <label>Italic</label>
+      <input type="checkbox" id="italic">
+    </div>
+
+    <div class="row">
+      <label data-i18n="bright">Яркость</label>
+      <input type="range" min="0.6" max="1" step="0.05" id="bright">
+    </div>
+
+    <button onclick="saveSettings()" data-i18n="save">Сохранить</button>
+    <button onclick="closeSettings()">Закрыть</button>
+  </div>
+</div>
+
+<script>
+const i18n = {
+  ru:{welcome:"Добро пожаловать!",desc:"Здесь ваши книги становятся ближе.",settings:"Настройки",avatar:"Аватар",background:"Фон",theme:"Тема",lang:"Язык",font:"Размер шрифта",bright:"Яркость",save:"Сохранить",remove:"Удалить"},
+  en:{welcome:"Welcome!",desc:"Your books become closer here.",settings:"Settings",avatar:"Avatar",background:"Background",theme:"Theme",lang:"Language",font:"Font size",bright:"Brightness",save:"Save",remove:"Remove"},
+  kz:{welcome:"Қош келдіңіз!",desc:"Кітаптарыңыз жақынырақ болады.",settings:"Баптаулар",avatar:"Аватар",background:"Фон",theme:"Тақырып",lang:"Тіл",font:"Қаріп өлшемі",bright:"Жарықтық",save:"Сақтау",remove:"Жою"},
+  fr:{welcome:"Bienvenue!",desc:"Vos livres deviennent plus proches.",settings:"Paramètres",avatar:"Avatar",background:"Fond",theme:"Thème",lang:"Langue",font:"Taille de police",bright:"Luminosité",save:"Enregistrer",remove:"Supprimer"},
+  de:{welcome:"Willkommen!",desc:"Ihre Bücher werden näher.",settings:"Einstellungen",avatar:"Avatar",background:"Hintergrund",theme:"Thema",lang:"Sprache",font:"Schriftgröße",bright:"Helligkeit",save:"Speichern",remove:"Löschen"},
+  es:{welcome:"Bienvenido!",desc:"Tus libros están más cerca.",settings:"Configuración",avatar:"Avatar",background:"Fondo",theme:"Tema",lang:"Idioma",font:"Tamaño de fuente",bright:"Brillo",save:"Guardar",remove:"Eliminar"},
+  zh:{welcome:"欢迎！",desc:"您的书更近了。",settings:"设置",avatar:"头像",background:"背景",theme:"主题",lang:"语言",font:"字体大小",bright:"亮度",save:"保存",remove:"删除"}
+};
+
+function applyLang(lang){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.innerText = i18n[lang][el.dataset.i18n];
+  });
+}
+
+function openSettings(){document.getElementById('settings').style.display='flex'}
+function closeSettings(){document.getElementById('settings').style.display='none'}
+
+function removeAvatar(){
+  localStorage.removeItem('avatar');
+  document.getElementById('avatarPreview').src='';
+}
+
+function removeBg(){
+  localStorage.removeItem('bg');
+  document.body.style.backgroundImage='';
+}
+
+document.getElementById('avatarInput').onchange=e=>{
+  const r=new FileReader();
+  r.onload=()=>{localStorage.setItem('avatar',r.result);avatarPreview.src=r.result}
+  r.readAsDataURL(e.target.files[0]);
+}
+
+document.getElementById('bgInput').onchange=e=>{
+  const r=new FileReader();
+  r.onload=()=>{localStorage.setItem('bg',r.result);document.body.style.backgroundImage=url}
+  r.readAsDataURL(e.target.files[0]);
+}
+
+function saveSettings(){
+  const s={
+    theme:theme.value,
+    lang:lang.value,
+    fontSize:fontSize.value,
+    bold:bold.checked,
+    italic:italic.checked,
+    bright:bright.value
+  };
+  localStorage.setItem('settings',JSON.stringify(s));
+  applySettings();
+  closeSettings();
+}
+
+function applySettings(){
+  const s=JSON.parse(localStorage.getItem('settings'));
+  if(!s)return;
+
+  applyLang(s.lang);
+  document.documentElement.style.setProperty('--fontSize',s.fontSize+'px');
+  document.documentElement.style.setProperty('--fontWeight',s.bold?'700':'400');
+  document.documentElement.style.setProperty('--fontStyle',s.italic?'italic':'normal');
+  document.documentElement.style.setProperty('--brightness',s.bright);
+
+  if(s.theme==='dark'){document.documentElement.style.setProperty('--bg','#111');document.documentElement.style.setProperty('--text','#fff')}
+  if(s.theme==='light'){document.documentElement.style.setProperty('--bg','#fff');document.documentElement.style.setProperty('--text','#111')}
+  if(s.theme==='read'){document.documentElement.style.setProperty('--bg','#f4ecd8');document.documentElement.style.setProperty('--text','#5b4636')}
+  if(s.theme==='cold'){document.documentElement.style.setProperty('--bg','#e8f1f8');document.documentElement.style.setProperty('--text','#123')}
+}
+
+window.onload=()=>{
+  if(localStorage.getItem('avatar')) avatarPreview.src=localStorage.getItem('avatar');
+  if(localStorage.getItem('bg')) document.body.style.backgroundImage=url;
+  applySettings();
+}
+</script>
+
+</body>
+</html>

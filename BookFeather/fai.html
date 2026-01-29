@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>f.ai помощник — Bookfeather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="fai.css">
+</head>
+<body class="light"> <div class="top">
+        <div class="back" onclick="goBack()">←</div>
+        <div class="title">f.ai помощник</div>
+    </div>
+
+    <div id="chat">
+        </div>
+
+    <form class="inputArea" onsubmit="event.preventDefault(); sendMessage();">
+        <input type="text" id="userInput" placeholder="Спросите о книге..." autocomplete="off">
+        <button type="submit">➤</button>
+    </form>
+
+    <script src="fai.js"></script>
+</body>
+</html>

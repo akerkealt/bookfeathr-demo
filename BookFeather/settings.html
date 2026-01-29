@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройки — Bookfeather</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body class="light"> <div class="top-bar">
+        <button class="back-btn" onclick="goBack()">← На главную</button>
+    </div>
+
+    <div class="container">
+        <h1>Настройки</h1>
+
+        <section>
+            <label for="language">Язык интерфейса</label>
+            <select id="language">
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+                <option value="kz">Қазақша</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="es">Español</option>
+                <option value="cn">中文</option>
+            </select>
+
+            <label for="theme">Цветовая тема</label>
+            <select id="theme">
+                <option value="light">Светлая (Перо)</option>
+                <option value="dark">Тёмная (Ночь)</option>
+                <option value="read">Режим чтения (Пергамент)</option>
+                <option value="cold">Холодный режим (Иней)</option>
+            </select>
+        </section>
+
+        <hr>
+
+        <section>
+            <label for="fontSize">Размер шрифта</label>
+            <input type="range" id="fontSize" min="14" max="28" value="16">
+            <div class="preview" id="textPreview">Так будет выглядеть текст в вашей книге.</div>
+
+            <label>Стиль начертания</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="bold"> <label for="bold" class="inline-label">Жирный</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="italic"> <label for="italic" class="inline-label">Курсив</label>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <label>Персонализация фона</label>
+            <div class="upload-box">
+                <small>Загрузить своё фото:</small>
+                <input type="file" id="bgUpload" accept="image/*">
+                
+                <small>Или выбрать цвет:</small>
+                <input type="color" id="bgColor" value="#f3efe7">
+            </div>
+            <div class="preview" id="bgPreview">Предпросмотр фона</div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Медиафайлы</h2>
+            <div class="file-actions">
+                <div class="action-item">
+                    <p>Аватар профиля:</p>
+                    <input type="file" id="avatarUpload" accept="image/*">
+                    <button type="button" class="secondary-btn" onclick="removeAvatar()">Удалить аватар</button>
+                </div>
+                
+                <div class="action-item">
+                    <p>Ваша текущая книга:</p>
+                    <input type="file" id="bookUpload" accept=".pdf,.epub,.txt">
+                    <button type="button" class="secondary-btn" onclick="removeBook()">Удалить книгу</button>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2 class="danger-title">Управление аккаунтом</h2>
+            <button type="button" class="danger-btn" onclick="logout()">Выйти из системы</button>
+            <button type="button" class="danger-btn outline" onclick="deleteAccount()">Удалить аккаунт навсегда</button>
+        </section>
+
+        <hr>
+
+        <button class="save-btn" onclick="saveSettings()">Сохранить все настройки</button>
+    </div>
+
+    <script src="settings.js"></script>
+    <script>
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

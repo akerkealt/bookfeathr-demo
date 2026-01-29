@@ -1,0 +1,96 @@
+/* Переменные тем */
+:root {
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #333;
+    --accent: #6e6150;
+    --shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+body.dark {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #eee;
+    --shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+h1 { text-align: center; color: var(--accent); }
+
+/* Поле добавления */
+.add-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--card);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+}
+
+.add-btn {
+    padding: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Карточка песни */
+.song-card {
+    background: var(--card);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.song-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.song-title { font-weight: 600; }
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff5c5c;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Стиль плеера */
+audio {
+    width: 100%;
+    height: 35px;
+}
